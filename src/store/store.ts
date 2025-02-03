@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { v4 as uuidv4 } from "uuid";
 import { DraftPatient, Patient } from "../interface";
-import { devtools } from "zustand/middleware";
+import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
 interface PatientState {
     patients: Patient[],
@@ -20,7 +20,9 @@ const createPatient = (patient: DraftPatient): Patient => {
 }
 
 export const usePatientStore = create<PatientState>()(
-    devtools((set) => ({
+    devtools(
+    persist(
+        (set) => ({
         patients: [],
         activeId: '',
         addPatient: (data) => {
@@ -46,5 +48,10 @@ export const usePatientStore = create<PatientState>()(
             }))
         },
         
+    }),
+    {
+        name: 'patient-store',
+        storage: createJSONStorage(()=> localStorage),
+        version: 1,
     })
 ))

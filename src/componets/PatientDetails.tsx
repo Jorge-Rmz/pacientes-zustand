@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { Patient } from "../interface";
 import { usePatientStore } from "../store/store";
 import PatientDetailItem from "./PatientDetailItem";
@@ -11,6 +12,7 @@ export default function PatientDetails({ patient }: PatientDetailsProps) {
 
     const handleClick = () => {
         deletePatient(patient.id);
+        toast.error('Patient delete correctly')
     }
     return (
         <div className="mx-5 my-10 px-5 py-10 bg-white shadow-md rounded-xl">

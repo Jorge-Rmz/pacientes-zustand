@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form"
+import {toast} from "react-toastify"
 import Error from "./Error"
 import { DraftPatient } from "../interface"
 import { usePatientStore } from "../store/store";
@@ -13,15 +14,17 @@ export default function PatientForm() {
             setValue('name', activePatient.name);
             setValue('caretaker', activePatient.caretaker);
             setValue('email', activePatient.email);
-            setValue('date', new Date(activePatient.date));
+            setValue('date', activePatient.date);
             setValue('symptoms', activePatient.symptoms);
         }
     }, [activeId])
     const registerPatient = (data: DraftPatient) => {
         if (activeId) {
             editPatient(data);
+            toast.success('Patient updated successfully')
         } else {
             addPatient(data);
+            toast.success('Patient already registered')
         }
         reset();
     }
